@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,8 +12,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using DevExpress.Mvvm.Native;
 using Microsoft.Win32;
 using TestProfKholod.Model;
+using Brushes = System.Drawing.Brushes;
 
 namespace TestProfKholod.ViewModel
 {
@@ -99,7 +103,9 @@ namespace TestProfKholod.ViewModel
                     {
                         ListLogInfos.Clear();
                     });
-                    
+                    int maxCount = 0;
+                    int idMax = -1;
+                    int id = 0;
                     foreach (var item in UrlList)
                     {
                         if (_cancellationToken.IsCancellationRequested)
@@ -109,10 +115,19 @@ namespace TestProfKholod.ViewModel
                         LogInfo li = new LogInfo();
                         li.Url = item;
                         li.Count = ps.SearchTag("a", item);
+                        if (li.Count > maxCount)
+                        {
+                            if (idMax > -1)
+                                ListLogInfos[idMax].Color = "White";
+                            li.Color = "Green";
+                            idMax = id;
+                            maxCount = li.Count;
+                        }
                         Application.Current.Dispatcher.Invoke(() =>
                         {
                             ListLogInfos.Add(li);
                         });
+                        id++;
                     }
 
                 }

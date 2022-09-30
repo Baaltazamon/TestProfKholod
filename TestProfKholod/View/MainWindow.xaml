@@ -69,11 +69,17 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="URL" 
                                     Width="3*"
-                                    Binding="{Binding Url}"/>
+                                    Binding="{Binding Url}" />
                 <DataGridTextColumn Header="Количество"
                                     Width="1*"
+                                    
                                     Binding="{Binding Count}"/>
             </DataGrid.Columns>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="{Binding Color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </Style>
+            </DataGrid.RowStyle>
         </DataGrid>
         <Button x:Name="BtCancel" 
             Content="Отмена" 
