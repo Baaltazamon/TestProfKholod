@@ -132,5 +132,8 @@
   <ItemGroup>
     <SplashScreen Include="Assets\unnamed.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\urllist.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
