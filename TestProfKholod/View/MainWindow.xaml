@@ -1,0 +1,87 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestProfKholod"
+        xmlns:Custom="http://schemas.devexpress.com/winfx/2008/xaml/charts/rangecontrolclient" x:Class="TestProfKholod.View.MainWindow"
+        mc:Ignorable="d"
+        Title="Проф холод" Height="450" Width="800" Icon="unnamed.jpg"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="359*"/>
+            <ColumnDefinition Width="433*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Margin="54,103,0,27" Width="272"
+                 ItemsSource="{Binding UrlList, Mode=OneWay}"
+                 />
+        <Button Grid.Column="0" x:Name="BtLoad" HorizontalAlignment="Left" 
+                Margin="52,21,0,0" 
+                VerticalAlignment="Top" Width="75" 
+                Command="{Binding WriteListBox}"
+                CommandParameter="{Binding IsChecked, ElementName=ChbLoad}"
+                >
+            <TextBlock TextWrapping="Wrap" 
+                       Text="Загрузить список" TextAlignment="Center"/>
+        </Button>
+        <Button x:Name="BtParseSelected" Content="Спарсить выбранный" 
+                HorizontalAlignment="Left" 
+                Margin="8,28,0,0" 
+                VerticalAlignment="Top" 
+                Width="139" 
+                Command="{Binding StartParseSingle}"
+                CommandParameter="{Binding SelectedItem, ElementName=listBox}" Grid.Column="1"
+        />
+        <Button x:Name="BtParseAll" 
+                Content="Спарсить все" 
+                HorizontalAlignment="Left" 
+                Margin="162,28,0,0" 
+                VerticalAlignment="Top" 
+                Width="139" 
+                Command="{Binding StartParse}" Grid.Column="1"/>
+        <CheckBox Grid.Column="0" x:Name="ChbLoad" 
+                  Content="Открыть страницы после загрузки" 
+                  HorizontalAlignment="Left" 
+                  Margin="53,67,0,0" 
+                  VerticalAlignment="Top" 
+                  FontSize="10"/>
+        <Button Grid.Column="0" x:Name="BtStartAll" HorizontalAlignment="Left" 
+                Margin="140,21,0,0" 
+                VerticalAlignment="Top" Width="75" 
+                Command="{Binding OpenLink}">
+            <TextBlock TextWrapping="Wrap" 
+                Text="Открыть ссылки" TextAlignment="Center"/>
+        </Button>
+        <Button Grid.Column="0" x:Name="BtStartSelected" HorizontalAlignment="Left" 
+                Margin="227,21,0,0" 
+                VerticalAlignment="Top" Width="75" 
+                Command="{Binding OpenLinkSingle}"
+                CommandParameter="{Binding SelectedItem, ElementName=listBox}">
+            <TextBlock TextWrapping="Wrap" 
+                Text="Открыть выбранную" TextAlignment="Center"/>
+        </Button>
+        <DataGrid x:Name="dataGrid"
+                  Margin="11,78,24,25" AutoGenerateColumns="False"
+                  ItemsSource="{Binding ListLogInfos, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"
+                  >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="URL" 
+                                    Width="3*"
+                                    Binding="{Binding Url}"/>
+                <DataGridTextColumn Header="Количество"
+                                    Width="1*"
+                                    Binding="{Binding Count}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="BtCancel" 
+            Content="Отмена" 
+            HorizontalAlignment="Left" 
+            Margin="311,28,0,0" 
+            VerticalAlignment="Top" 
+            Width="103" 
+            Command="{Binding CancelCommand}" Grid.Column="1"/>
+
+    </Grid>
+</Window>
